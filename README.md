@@ -1,4 +1,6 @@
 # ynot
-Go 语言实现的网络编程框架，主要目的是：
-1. 为业务开发提供一个简单好用的网络编程框架，实现快速开发网络应用程序的目的。
-2. 在开发框架的过程中，不断学习和实践 Go 语言网络编程知识。
+English | [🇨🇳中文](README_ZH.md)
+
+The network programming framework implemented by Go language, the main purposes are:
+1. Provides a simple and easy-to-use network programming framework for business development to achieve the purpose of rapid development of network applications.
+2. In the process of developing the framework, learn and practice the knowledge of Go language network programming.
