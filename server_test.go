@@ -19,6 +19,7 @@ func TestYServer(t *testing.T) {
 		s.Serve()
 	}()
 	ss := s.(*YServer)
+	// Wait for server running.
 	for !ss.IsRunning() {
 		time.Sleep(time.Microsecond)
 	}

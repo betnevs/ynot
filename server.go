@@ -39,23 +39,24 @@ type YServer struct {
 }
 
 func (ys *YServer) Start() {
-	log.Printf("server start, listen on %s:%d\n", ys.IP, ys.Port)
+	log.Printf("Server start, listen on %s:%d\n", ys.IP, ys.Port)
 	go func() {
 		addr := fmt.Sprintf("%s:%d", ys.IP, ys.Port)
 		ln, err := net.Listen(ys.Network, addr)
 		if err != nil {
-			log.Panicf("server[%s:%d] start error: %s", ys.IP, ys.Port, err.Error())
+			log.Panicf("Server[%s:%d] start error: %s", ys.IP, ys.Port, err.Error())
 		}
 		ys.state = StateRunning
 		for {
 			conn, err := ln.Accept()
 			if err != nil {
-				log.Printf("server[%s:%d] accept error: %s\n", ys.IP, ys.Port, err.Error())
+				log.Printf("Server[%s:%d] accept error: %s\n", ys.IP, ys.Port, err.Error())
 				continue
 			}
-			go handleConn(conn)
-		}
 
+			yConn := NewConn(conn.(*net.TCPConn), 1, DefaultHandlerFunc)
+			yConn.Start()
+		}
 	}()
 }
 
@@ -69,13 +70,13 @@ func handleConn(conn net.Conn) {
 		buf := make([]byte, 512)
 		n, err := conn.Read(buf)
 		if err != nil {
-			log.Println("read buf error:", err)
+			log.Println("Read buf error:", err)
 			break
 		}
-		log.Println("server receive:", string(buf[:n]))
+		log.Println("Server receive:", string(buf[:n]))
 		n, err = conn.Write(buf[:n])
 		if err != nil {
-			log.Println("write buf error:", err)
+			log.Println("Write buf error:", err)
 		}
 	}
 }
